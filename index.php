@@ -24,6 +24,8 @@ spl_autoload_register(
 
 $App = new \Silex\Application();
 
+$App['debug'] = true;
+
 $App->get('/hello/{name}', function ($name) use ($App) {
 	return 'Hello '.$App->escape($name);
 });
