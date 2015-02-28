@@ -4,6 +4,8 @@ This is a simple REST API designed to provide basic functionality for various ge
 
 # Setup
 
+##Composer
+
 Begin by installing composer. You can use a local package manager if one is available, or use the following command within the root project directory:
 
 	$ curl -sS https://getcomposer.org/installer | php
@@ -11,3 +13,9 @@ Begin by installing composer. You can use a local package manager if one is avai
 After composer is installed, use it fetch the silex framework (and any other dependencies) with the following command:
 
 	$ composer.phar install
+
+For other installation options, see the See the [composer documentation](https://getcomposer.org/doc/00-intro.md) for assistance.
+
+## Silex
+
+On Apache, you may need to make changes to your .htaccess file, particularly if the app isn't at the root directory. For other web servers and assistance, see the [silex documentation](http://silex.sensiolabs.org/doc/web_servers.html).
