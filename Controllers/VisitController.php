@@ -14,11 +14,15 @@ use \Symfony\Component\HttpFoundation\Response;
 class VisitController extends AbstractController {
 
 	public function createVisits($user){
-		$body = json_decode($this->request->getContent());
+		$RequestBody = json_decode($this->_Request->getContent());
+
+		return json_encode($RequestBody);
 	}
 
 	public function updateVisits($user){
-		$body = json_decode($this->request->getContent());
+		$RequestBody = json_decode($this->_Request->getContent());
+
+		return json_encode($RequestBody);
 	}
 
 	public function getVisits($user){
