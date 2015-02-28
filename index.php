@@ -41,7 +41,7 @@ $App->get('/v1/states/{state}/cities/{city}', function($state, $city, Request $R
     $radius = $Request->query->get('radius', false);
 
     if(empty($radius)){
-        $app->abort(404, "No radius passed to find cities in range.");
+        $App->abort(404, "No radius passed to find cities in range.");
     }
 
     $Controller = new Controllers\CityController($App, $Request);
