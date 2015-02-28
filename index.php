@@ -22,6 +22,8 @@ spl_autoload_register(
     true
 );
 
+use \Symfony\Component\HttpFoundation\Request;
+
 $App = new \Silex\Application();
 
 $App['debug'] = true;
