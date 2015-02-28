@@ -22,7 +22,7 @@ spl_autoload_register(
     true
 );
 
-$App = new Silex\Application();
+$App = new \Silex\Application();
 
 $App->get('/hello/{name}', function ($name) use ($App) {
 	return 'Hello '.$App->escape($name);
