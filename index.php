@@ -43,7 +43,7 @@ $App->get('/v1/states/{state}/cities/{city}?radius={distance}', function($state,
 });
 
 $App->match('/v1/users/{user}/visits', function($user, Request $Request) use ($App) {
-    $Controller = new Controllers\CityController($App, $Request);
+    $Controller = new Controllers\VisitController($App, $Request);
 
     switch ($Request->getMethod()) {
         case "POST":
