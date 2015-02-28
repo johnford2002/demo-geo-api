@@ -1,9 +1,6 @@
 <?php
-
-require_once 'vendor/autoload.php';
 namespace DemoGeoAPI;
-
-//error_reporting(E_ALL);
+require_once 'vendor/autoload.php';
 
 //-- Setup autoloader
 spl_autoload_register(
