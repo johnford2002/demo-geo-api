@@ -37,9 +37,15 @@ $App->get('/v1/states/{state}/cities', function($state, Request $Request) use ($
     return $Controller->fetchCitiesByState($state);
 });
 
-$App->get('/v1/states/{state}/cities/{city}?radius={distance}', function($state, $city, $distance, Request $Request) use ($App) {
+$App->get('/v1/states/{state}/cities/{city}', function($state, $city, Request $Request) use ($App) {
+    $radius = $Request->query->get('radius', false);
+
+    if(empty($radius)){
+        $app->abort(404, "No radius passed to find cities in range.");
+    }
+
     $Controller = new Controllers\CityController($App, $Request);
-    return $Controller->fetchCitiesByRadius($state, $city, $distance);
+    return $Controller->fetchCitiesByRadius($state, $city, $radius);
 });
 
 $App->match('/v1/users/{user}/visits', function($user, Request $Request) use ($App) {

@@ -35,7 +35,7 @@ class CityController extends AbstractController {
 	 *
 	 * @return mixed
 	 */
-	public function fetchCitiesByRadius($state, $city, $distance){
+	public function fetchCitiesByRadius($state, $city, $radius){
 		$returnArray = array();
 
 		$returnArray = ['city4','city5','city6'];
