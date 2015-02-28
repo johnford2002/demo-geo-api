@@ -2,6 +2,26 @@
 namespace DemoGeoAPI;
 require_once 'vendor/autoload.php';
 
+//-- Setup autoloader
+spl_autoload_register(
+    $localAutoload = function ($className)
+    {
+        if (stripos($className, 'DemoGeoAPI\\') === 0) {
+            $className = str_replace('DemoGeoAPI\\', '', $className);
+            $className = str_replace('\\', '/', $className) . '.php';
+
+            if (is_file($className)) {
+                require_once($className);
+                return true;
+            }
+        }
+        
+        return false;
+    },
+    false,
+    true
+);
+
 use \Symfony\Component\HttpFoundation\Request;
 
 $App = new \Silex\Application();
