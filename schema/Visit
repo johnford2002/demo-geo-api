@@ -1,0 +1,13 @@
+CREATE TABLE `Visit` (
+  `VisitID` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `UserID` INT NOT NULL,
+  `CityID` INT NOT NULL,
+  `DateAdded` DATE DEFAULT NULL,
+  `DateTimeAdded` DATETIME DEFAULT NULL,
+  `LastUpdated` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`VisitID`),
+  KEY `UserID` (`UserID`),
+  KEY `CityID` (`CityID`),
+  KEY `DateAdded` (`DateAdded`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+  

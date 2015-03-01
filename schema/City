@@ -1,0 +1,18 @@
+CREATE TABLE `City` (
+  `CityID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(255) NOT NULL,
+  `StateID` TINYINT UNSIGNED NOT NULL,
+  `Status` VARCHAR(50) NOT NULL, 
+  `Latitude` FLOAT(10,6) NOT NULL,
+  `Longitude` FLOAT(10,6) NOT NULL,
+  `DateAdded` DATE DEFAULT NULL,
+  `DateTimeAdded` DATETIME DEFAULT NULL,
+  `LastUpdated` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`CityID`),
+  KEY `Name` (`Name`),
+  KEY `StateID` (`StateID`),
+  KEY `Status` (`Status`),
+  KEY `Latitude` (`Latitude`),
+  KEY `Longitude` (`Longitude`),
+  KEY `DateAdded` (`DateAdded`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;

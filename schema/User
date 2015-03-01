@@ -1,0 +1,13 @@
+CREATE TABLE `User` (
+  `UserID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `FirstName` VARCHAR(255) NOT NULL,
+  `LastName` VARCHAR(255) NOT NULL,
+  `DateAdded` DATE DEFAULT NULL,
+  `DateTimeAdded` DATETIME DEFAULT NULL,
+  `LastUpdated` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`UserID`),
+  KEY `FirstName` (`FirstName`),
+  KEY `LastName` (`LastName`),
+  KEY `DateAdded` (`DateAdded`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+  

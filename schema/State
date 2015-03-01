@@ -1,0 +1,12 @@
+CREATE TABLE `State` (
+  `StateID` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(255) NOT NULL,
+  `Abbreviation` VARCHAR(2) NOT NULL,
+  `DateAdded` DATE DEFAULT NULL,
+  `DateTimeAdded` DATETIME DEFAULT NULL,
+  `LastUpdated` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`StateID`),
+  KEY `Name` (`Name`),
+  KEY `Abbreviation` (`Abbreviation`),
+  KEY `DateAdded` (`DateAdded`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
