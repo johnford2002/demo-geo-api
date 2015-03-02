@@ -33,9 +33,21 @@ class Application extends \Silex\Application {
                 'password'  => $Config->password
             ),
         ));
+
+        // Register the default error handler
+        $this->error(function (\Exception $e, $code) {
+            $errorArray = array(
+                "status"=>"error",
+                "code"=>$code,
+                "exceptionCode"=>$e->getCode(),
+                "exceptionMessage"=>$e->getMessage()
+            );
+
+            return json_encode($errorArray);
+        });
     }
 
-	/**
+    /**
      * Validate a request and throw an exception if the request body is not proper json
      *
      * @throws \Exception
@@ -58,7 +70,7 @@ class Application extends \Silex\Application {
                 $this->parsedRequest = json_decode($Request->getContent());
 
                 if($this->parsedRequest === null) {
-                    throw new \Exception('JSON input could not be validated: '. json_last_error());
+                    throw new \Exception('JSON input could not be validated, last json error: '. json_last_error());
                 }
             }
 

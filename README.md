@@ -23,3 +23,7 @@ On Apache, you may need to make changes to your .htaccess file, particularly if 
 ## Database
 
 The schema used by the app can be found in the schema folder with a file for each of the various tables used. In order to setup your connection, populate the database.json file located in the config folder with the values for your connection. Initial data sets to load the City, State, and User table can be found in the test folder.
+
+#Usage
+
+Routes are defined in the root directory within index.php. The expected content-type for both requests and response is json. I highly recommend using the PostMan app within Google Chrome to test the API once it is installed and setup. It can be downloaded [here](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en). A sample collection has been placed in the test/PostMan folder to be imported and updated with the URL of your application. See the [PostMan documentation](https://www.getpostman.com/docs/collections) for more info.
