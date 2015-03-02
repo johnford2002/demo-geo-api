@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 $App = new Application();
 
 // Perform basic setup
-$App->setup();
+//$App->setup();
 
 // Uncomment to enable debugging
 $App['debug'] = true;
