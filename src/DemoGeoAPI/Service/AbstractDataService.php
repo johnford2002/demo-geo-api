@@ -61,9 +61,9 @@ abstract class AbstractDataService {
 	 * @return void
 	 */
 	public function insert($dataArray){
-		$visitArray['DateAdded'] = date('Y-m-d');
-		$visitArray['DateTimeAdded'] = date('Y-m-d H:i:s');
-		$visitArray['LastUpdated'] = date('Y-m-d H:i:s');
+		$dataArray['DateAdded'] = date('Y-m-d');
+		$dataArray['DateTimeAdded'] = date('Y-m-d H:i:s');
+		$dataArray['LastUpdated'] = date('Y-m-d H:i:s');
 
 		try{
 			$this->_dbConnection->insert($this->_tableName, $dataArray);
