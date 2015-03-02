@@ -1,5 +1,21 @@
 {
+	"name": "DemoGeoAPI",
+	"description": "Restful API for retrieving geographic related data.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "John Ford",
+			"email": "john.ford2002@gmail.com",
+			"role": "Lead Developer"
+		}
+	],
     "require": {
-        "silex/silex": "~1.2"
-    }
+        "silex/silex": "~1.2",
+        "doctrine/dbal":"~2.2"
+    },
+    "autoload": {
+		"psr-0": {
+			"DemoGeoAPI": "src/"
+		}
+	}
 }
