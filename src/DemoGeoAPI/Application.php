@@ -11,6 +11,16 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Application extends \Silex\Application {
 
+    public function __construct(){
+        parent::__construct();
+
+        // Perform basic setup
+        $this->setup();
+
+        // Configure routes
+        $this->configureRoutes();
+    }
+
     /**
      * Perform basic setup of the application
      *
@@ -44,6 +54,54 @@ class Application extends \Silex\Application {
             );
 
             return json_encode($errorArray);
+        });    
+    }
+
+    /**
+     * Configure the routes for the application
+     *
+     * @return void;
+     */
+    public function configureRoutes(){
+        // Retrieve all cities in a given state
+        $this->get('/v1/states/{state}/cities', function($state, Request $Request) {
+            $Controller = new Controllers\CityController($this, $Request);
+            return $Controller->getCitiesByState($state);
+        });
+
+        // Retrieve all cities in a given radius
+        $this->get('/v1/states/{state}/cities/{city}', function($state, $city, Request $Request) {
+            $radius = $Request->query->get('radius', false);
+
+            if(empty($radius)){
+                $this->abort(400, "No radius passed to find cities in range.");
+            }
+
+            $Controller = new Controllers\CityController($this, $Request);
+            return $Controller->getCitiesByRadius($city, $state, $radius);
+        });
+
+        // Retrieve a given user
+        $this->get('/v1/users/{userId}', function($userId, Request $Request) {
+            $Controller = new Controllers\UserController($this, $Request);
+            return $Controller->getUser($userId);
+        });
+
+        // Perform actions on user visits
+        $this->match('/v1/users/{userId}/visits', function($userId, Request $Request) {
+            $Controller = new Controllers\VisitController($this, $Request);
+
+            switch ($Request->getMethod()) {
+
+                case "POST":
+                    return $Controller->createVisits($userId);
+
+                case "PUT":
+                    return $Controller->updateVisits($userId);
+
+                case "GET":
+                    return $Controller->getVisits($userId);
+            }
         });
     }
 

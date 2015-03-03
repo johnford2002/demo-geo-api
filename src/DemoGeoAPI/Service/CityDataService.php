@@ -12,11 +12,9 @@ use DemoGeoAPI\Service;
 class CityDataService extends AbstractDataService {
 
 	/**
-	 * Conversion constants for converting distance
+	 * Earth's radius in miles
 	 */
-	const MILE_TO_KILOMETER = 1.60934; //1 MILE = 1.60934 KM
-	const KILOMETER_TO_MILE = 0.621371; //1 KILOMETER = 0.621371 MILE
-	const EARTH_RADIUS = 6371; //KM
+	const EARTH_RADIUS = 3959;
 
 	/**
 	 * @var string $_primaryKeyColumn
@@ -68,7 +66,6 @@ class CityDataService extends AbstractDataService {
 
 	/**
 	 * Fetch all city records for the given state
-	 *
 	 * @param mixed $state
 	 * @param string $type
 	 * @throws \Exception
@@ -101,6 +98,7 @@ class CityDataService extends AbstractDataService {
 		try{
 			$returnArray = $this->_dbConnection->fetchAll($sql, array($state));
 		} catch (\Exception $e){
+			throw $e;
 			$returnArray = array();
 		}
 
@@ -109,6 +107,10 @@ class CityDataService extends AbstractDataService {
 
 	/**
 	 * Attempt to retrieve all cities within the given radius of the given city
+	 *
+	 * Adapted for use from
+	 * @author Chris Veness
+	 * @see http://www.movable-type.co.uk/scripts/latlong-db.html
 	 *
 	 * @param array $cityArray
 	 * @param number $radius -- miles
@@ -122,21 +124,18 @@ class CityDataService extends AbstractDataService {
 		$latRad = deg2rad($latDeg);
 		$lonRad = deg2rad($lonDeg);
 
-		// Convert the input radius from miles to kilometers
-		$radiusKilometers = $radius * self::MILE_TO_KILOMETER;
-
 		// Get the first-cut bounding box using city as the starting point (in degrees)
-	    $maxLatDeg = $latDeg + rad2deg($radiusKilometers/self::EARTH_RADIUS);
-	    $minLatDeg = $latDeg - rad2deg($radiusKilometers/self::EARTH_RADIUS);
+	    $maxLatDeg = $latDeg + rad2deg($radius/self::EARTH_RADIUS);
+	    $minLatDeg = $latDeg - rad2deg($radius/self::EARTH_RADIUS);
 	    // Compensate for degrees longitude getting smaller with increasing latitude
-	    $maxLonDeg = $lonDeg + rad2deg($radiusKilometers/self::EARTH_RADIUS/cos($latRad));
-	    $minLonDeg = $lonDeg - rad2deg($radiusKilometers/self::EARTH_RADIUS/cos($latRad));
+	    $maxLonDeg = $lonDeg + rad2deg($radius/self::EARTH_RADIUS/cos($latRad));
+	    $minLonDeg = $lonDeg - rad2deg($radius/self::EARTH_RADIUS/cos($latRad));
 
 	    // Complex SQL query to find cities in the database within radius of initial city
 	    $sql = "
 		    SELECT 
 		    	FirstCut.*,
-	            acos(sin(:lat)*sin(radians(Latitude)) + cos(:lat)*cos(radians(Latitude))*cos(radians(Longitude)-:lon)) * :EarthRadius As KilometerDistance
+	            acos(sin(:lat)*sin(radians(Latitude)) + cos(:lat)*cos(radians(Latitude))*cos(radians(Longitude)-:lon)) * :EarthRadius As MileDistance
 	        FROM (
 	        	/* SUBQUERY TO LIMIT RESULTS USING BOUNDING BOX */
 	            SELECT 
@@ -159,7 +158,7 @@ class CityDataService extends AbstractDataService {
 	        ) As FirstCut
 	        WHERE 
 	        	acos(sin(:lat)*sin(radians(Latitude)) + cos(:lat)*cos(radians(Latitude))*cos(radians(Longitude)-:lon)) * :EarthRadius < :rad
-	        ORDER BY KilometerDistance
+	        ORDER BY MileDistance
             ";
 
         // Parameters required for query
@@ -170,7 +169,7 @@ class CityDataService extends AbstractDataService {
 	        'minLon' 		=> $minLonDeg,
 	        'maxLat' 		=> $maxLatDeg,
 	        'maxLon' 		=> $maxLonDeg,
-	        'rad'    		=> $radiusKilometers,
+	        'rad'    		=> $radius,
 	        'EarthRadius'   => self::EARTH_RADIUS,
 	    );
 
